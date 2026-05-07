@@ -22,8 +22,7 @@ $ mvn clean package
 ```
 
 ```console
-$ export DEBEZIUM_VERSION=1.8
-$ docker-compose up --build
+$ docker-compose --env-file ../.env up --build
 ```
 
 ## Deploy the Debezium Postgres Connector
@@ -58,19 +57,19 @@ Doing so, observe the contents of the `dbserver1.inventory.vegetable`, `dbserver
 ```console
 $ docker run -it --rm \
     --network auditlog_default \
-    quay.io/debezium/tooling:1.2 \
+    quay.io/debezium/tooling:2.0 \
     /bin/bash -c "kafkacat -b kafka:9092 \
     -C -o beginning -q -u -t dbserver1.inventory.vegetable | jq ."
 
 $ docker run -it --rm \
     --network auditlog_default \
-    quay.io/debezium/tooling:1.2 \
+    quay.io/debezium/tooling:2.0 \
     /bin/bash -c "kafkacat -b kafka:9092 \
     -C -o beginning -q -u -t dbserver1.inventory.transaction_context_data | jq ."
 
 $ docker run -it --rm \
     --network auditlog_default \
-    quay.io/debezium/tooling:1.2 \
+    quay.io/debezium/tooling:2.0 \
     /bin/bash -c "kafkacat -b kafka:9092 \
     -C -o beginning -q -u -t dbserver1.inventory.vegetable.enriched | jq ."
 ```
@@ -105,7 +104,7 @@ create a task for administrator to provide the missing data.
 ```console
 $ docker run --tty --rm -i \
         --network auditlog_default \
-        quay.io/debezium/tooling:1.2 \
+        quay.io/debezium/tooling:2.0 \
         bash -c 'pgcli postgresql://postgresuser:postgrespw@vegetables-db:5432/vegetablesdb'
 ```
 
@@ -147,7 +146,7 @@ This would then fix the missing event in the transaction context data topic and 
 ## Stopping All Services
 
 ```console
-$ docker-compose down
+$ docker-compose --env-file ../.env down
 ```
 
 ## Running the Quarkus Applications Locally
@@ -156,7 +155,7 @@ Set `ADVERTISED_HOST_NAME` of the `kafka` service in _docker-compose.yaml_ to th
 Start all services except the `vegetables-service` and the `log-enricher`:
 
 ```console
-$ docker-compose up --scale vegetables-service=0 --scale log-enricher=0
+$ docker-compose --env-file ../.env up --scale vegetables-service=0 --scale log-enricher=0
 ```
 
 Then start the three services via the Quarkus dev mode:

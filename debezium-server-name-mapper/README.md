@@ -20,8 +20,7 @@ Both Apache Pulsar and the source database are deployed via Docker Compose file.
 From terminal start the source database and the sink system:
 
 ```
-$ export DEBEZIUM_VERSION=2.5
-$ docker compose up
+$ docker compose --env-file ../.env up
 ```
 
 In another terminal build the custom naming policy class and the runner JAR to start the application:
@@ -39,7 +38,7 @@ $ java -jar target/quarkus-app/quarkus-run.jar
 In another terminal check the created topics:
 
 ```
-docker compose exec pulsar bin/pulsar-admin broker-stats topics -i
+docker compose --env-file ../.env exec pulsar bin/pulsar-admin broker-stats topics -i
 ```
 
 The resulting topic list should contain for example a topic named

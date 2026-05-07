@@ -23,6 +23,7 @@ For getting started please check the [tutorial example](./tutorial).
 * [Debezium - Auto-Creation of Topics](./topic-auto-create): Auto-creating Debezium change data topics
 * [Debezium - Outbox Pattern](./outbox): Implement the "outbox pattern", an approach for letting services communicate in an asynchronous and reliable fashion
 * [Debezium Management Platform](./debezium-platform): How to use the debezium-platform to create a data pipeline to stream chnages from a PostgreSQL database to Apache Kafka broker in kubernetes cluster.
+* [Debezium - Python Connect-Mode](./debezium-python): How to embed Debezium into a Python application using Connect-mode with no JSON serialization overhead
 * [Debezium - Saga Pattern](./saga): How to implement the [Saga pattern](https://microservices.io/patterns/data/saga.html) for realizing distributed transactions across multiple microservices
 * [Debezium - Testing](./testcontainers): How to implement an integration test for your CDC set-up using [Testcontainers](https://www.testcontainers.org/)
 * [Debezium Connect - Using Kafka with SSL enabled](./kafka-ssl): How to configure Debezium Connect to use a Kafka instance with SSL enabled
@@ -31,6 +32,7 @@ For getting started please check the [tutorial example](./tutorial).
 * [Debezium Server - Using custom topic naming policy](./debezium-server-name-mapper): How to deploy [Debezium Server](https://debezium.io/documentation/reference/stable/operations/debezium-server.html) using a custom topic naming policy
 * [Debezium Server - Operator - Using Kafka](./operator/tutorial-postgresql-kafka): How to stream changes from a PostgreSQL database into Apache Kafka with Debezium Server deployed in a Kubernetes cluster
 * [Debezium Server - Operator - Using Kafka](./operator/tutorial-pubsub): How to stream changes from a PostgreSQL database into [Google Cloud Pub/Sub](https://cloud.google.com/pubsub/docs) with Debezium Server deployed in a Kubernetes cluster
+* [Apicurio Registry](./apicurio): How to use Debezium with Apicurio Registry for schema management, supporting Avro and JSON converters with MySQL
 * [Graphql](./graphql): How to build a GraphQL Subscription on top of Debezium Change Events
 * [HTTP Signaling and Notification](./http-signaling-notification): How to create custom signaling and notification channels for Debezium connectors
 * [Infinispan - Standalone](./infinispan-standalone): How to use a standalone **Infinispan** cluster that will be used for buffering in-progress transactions by the Debezium Oracle connector
@@ -54,3 +56,4 @@ For getting started please check the [tutorial example](./tutorial).
 * [MySQL - Streaming to PostgresSQL](./unwrap-smt): How to capture events from a MySQL database and stream them to a PostgresSQL database
 * [Quarkus Native Image with Debezium](./quarkus-native): superfast CDC with Debezium and Quarkus
 * [Quarkus Debezium Extension Quick Start](./debezium-quarkus-extension-service): superfast CDC with Debezium Extension for Quarkus
+* [MongoDB - Failover](./mongodb-failover): Demo showing how Debezium works for mongodb when primary replica fails.

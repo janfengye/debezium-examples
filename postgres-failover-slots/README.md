@@ -11,8 +11,7 @@ connecting through the proxy allows Debezium to automatically fail over from pre
 Start all the components:
 
 ```shell
-export DEBEZIUM_VERSION=3.0
-docker compose up
+docker compose --env-file ../.env up
 ```
 
 Get a DB session on the Postgres read replica:
@@ -20,7 +19,7 @@ Get a DB session on the Postgres read replica:
 ```shell
 docker run --tty --rm -i \
      --network failover-network \
-    quay.io/debezium/tooling:1.2 \
+    quay.io/debezium/tooling:2.0 \
     bash -c 'pgcli --prompt "\u@replica:\d> " postgresql://user:top-secret@postgres_replica:5432/inventorydb'
 ```
 
@@ -41,14 +40,14 @@ http PUT http://localhost:8083/connectors/inventory-source/config < inventory-so
 # Consume messages from a Debezium topic
 docker run --tty --rm \
      --network failover-network \
-     quay.io/debezium/tooling:1.2 \
+     quay.io/debezium/tooling:2.0 \
      kcat -b kafka:9092 -C -o beginning -q \
      -t dbserver1.inventory.customers | jq .payload
 
 # Modify a record in the database (current primary):
 docker run --tty --rm -i \
      --network failover-network \
-    quay.io/debezium/tooling:1.2 \
+    quay.io/debezium/tooling:2.0 \
     bash -c 'pgcli --prompt "\u@primary:\d> " postgresql://user:top-secret@postgres_primary:5432/inventorydb'
 
 # update inventory.customers set first_name = 'Sarah' where id = 1001;
@@ -81,7 +80,7 @@ services:
 ```
 
 ```shell
-docker compose up -d
+docker compose --env-file ../.env up -d
 ```
 
 The connector will establish the connection again,
@@ -95,5 +94,5 @@ update inventory.customers set first_name = 'Rudy', last_name = 'Replica' where 
 Shut down the cluster:
 
 ```shell 
-docker compose down
+docker compose --env-file ../.env down
 ```
