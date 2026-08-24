@@ -10,11 +10,12 @@ import java.util.concurrent.ConcurrentMap;
 
 import jakarta.enterprise.inject.spi.CDI;
 
-import org.hibernate.FlushMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.engine.spi.TransactionCompletionCallbacks.BeforeCompletionCallback;
 import org.hibernate.event.spi.FlushEvent;
 import org.hibernate.event.spi.FlushEventListener;
+import org.hibernate.query.QueryFlushMode;
 
 /**
  * Hibernate event listener obtains the current TX id and stores it in a cache.
@@ -39,14 +40,14 @@ class TransactionRegistrationListener implements FlushEventListener {
 
         sessionsWithBeforeTransactionCompletion.put(event.getSession(), true);
 
-        event.getSession().getActionQueue().registerProcess( session -> {
-            Number txId = (Number) event.getSession().createNativeQuery("SELECT txid_current()")
-                    .setHibernateFlushMode(FlushMode.MANUAL)
+        event.getSession().getActionQueue().registerCallback( (BeforeCompletionCallback) session -> {
+            final var txId = session.createNativeQuery("SELECT txid_current()", Long.class)
+                    .setQueryFlushMode(QueryFlushMode.NO_FLUSH)
                     .getSingleResult();
 
-            getKnownTransactions().register(txId.longValue());
+            getKnownTransactions().register(txId);
 
-            sessionsWithBeforeTransactionCompletion.remove(session);
+            sessionsWithBeforeTransactionCompletion.remove((Session) session);
         } );
     }
 
