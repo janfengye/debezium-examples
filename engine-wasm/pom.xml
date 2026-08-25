@@ -8,15 +8,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>io.debezium.examples</groupId>
     <artifactId>engine-wasm</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-
         <database.hostname>localhost</database.hostname>
         <database.port>3306</database.port>
         <database.user>debezium</database.user>
